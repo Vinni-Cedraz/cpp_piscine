@@ -5,18 +5,26 @@
 
 class Contact {
   private:
-    std::string name;
-    std::string number;
+    std::string first_name;
+    std::string last_name;
+    std::string nickname;
+    std::string phone_number;
+    std::string darkest_secret;
 
   public:
-    // constructors-destructor:
     Contact();
-    Contact(const std::string &name, const std::string &number);
 
-    // setters-getters:
-    void setNameNumber(const std::string &name, const std::string &number);
-    const std::string &getName() const;
-    const std::string &getNumber() const;
+    const std::string &getFirstName() const;
+    const std::string &getLastName() const;
+    const std::string &getNickName() const;
+    const std::string &getPhoneNumber() const;
+    const std::string &getDarkestSecret() const;
+
+    void setFirstName(std::string first_name);
+    void setLastName(std::string last_name);
+	void setNickName(std::string nickname);
+	void setPhoneNumber(std::string phone_number);
+	void setDarkestSecret(std::string darkest_secret);
 };
 
 #endif

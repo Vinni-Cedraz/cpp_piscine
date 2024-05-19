@@ -20,7 +20,7 @@ Test(testPhoneBook, add_eight_contacts, .description = scenario1) {
                              "55555555", "66666666", "77777777", "88888888"};
 
     for (int i = 0; i < 8; i++) {
-        phonebook.add_contact(names[i], numbers[i]);
+        phonebook.add_contact(names[i], numbers[i], "", "", "");
     }
 	sem_wait(sem);
     phonebook.display_contacts();
@@ -40,7 +40,7 @@ Test(testPhoneBook, add_ninth_contact, .description = scenario2) {
                              "66666666", "77777777", "88888888", "99999999"};
 
     for (int i = 0; i < 9; i++) {
-        phonebook.add_contact(names[i], numbers[i]);
+        phonebook.add_contact(names[i], numbers[i], "", "", "");
     }
 	sem_wait(sem);
     phonebook.display_contacts();
@@ -60,7 +60,7 @@ Test(testPhoneBook, add_tenth_contact, .description = scenario3) {
                              "66666666", "77777777", "88888888", "99999999", "10101010"};
 
     for (int i = 0; i < 10; i++) {
-        phonebook.add_contact(names[i], numbers[i]);
+        phonebook.add_contact(names[i], numbers[i], "", "", "");
     }
     sem_wait(sem);
     phonebook.display_contacts();
@@ -82,7 +82,7 @@ Test(testPhoneBook, add_sixteen_contacts, .description = scenario4) {
                              "13131313", "14141414", "15151515", "16161616"};
 
     for (int i = 0; i < 16; i++) {
-        phonebook.add_contact(names[i], numbers[i]);
+        phonebook.add_contact(names[i], numbers[i], "", "", "");
     }
     sem_wait(sem);
     phonebook.display_contacts();
@@ -105,7 +105,7 @@ Test(testPhoneBook, add_seventeen_contacts, .description = scenario5) {
                              "13131313", "14141414", "15151515", "16161616", "17171717"};
 
     for (int i = 0; i < 17; i++) {
-        phonebook.add_contact(names[i], numbers[i]);
+        phonebook.add_contact(names[i], numbers[i], "", "", "");
     }
     sem_wait(sem);
     phonebook.display_contacts();
