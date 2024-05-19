@@ -1,7 +1,6 @@
 #include "Contact.hpp"
 
 Contact::Contact() : name(""), number("") {}
-Contact::~Contact() {}
 
 Contact::Contact(const std::string &name, const std::string &number) {
     this->name = name;

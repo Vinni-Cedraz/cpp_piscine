@@ -12,7 +12,6 @@ class Contact {
     // constructors-destructor:
     Contact();
     Contact(const std::string &name, const std::string &number);
-    ~Contact();
 
     // setters-getters:
     void setNameNumber(const std::string &name, const std::string &number);
