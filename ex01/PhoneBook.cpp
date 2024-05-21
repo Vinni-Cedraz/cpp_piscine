@@ -5,13 +5,12 @@
 
 PhoneBook::PhoneBook() { this->idx = 0; }
 
-void PhoneBook::add_contact(std::string first_name, std::string last_name, std::string nickname,
-                            std::string phone_number, std::string darkest_secret) {
-    contacts[idx].setFirstName(first_name);
-	contacts[idx].setLastName(last_name);
-	contacts[idx].setNickName(nickname);
-	contacts[idx].setPhoneNumber(phone_number);
-	contacts[idx].setDarkestSecret(darkest_secret);
+void PhoneBook::add_contact(user_input_t &user_input) {
+    contacts[idx].setFirstName(user_input.first_name);
+	contacts[idx].setLastName(user_input.last_name);
+	contacts[idx].setNickName(user_input.nickname);
+	contacts[idx].setPhoneNumber(user_input.phone_number);
+	contacts[idx].setDarkestSecret(user_input.darkest_secret);
     idx = (idx + 1) % 8; // reset idx to 0 if it reaches 8
 }
 
