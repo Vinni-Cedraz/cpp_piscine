@@ -1,29 +1,11 @@
 #include "Contact.hpp"
 
-Contact::Contact() : first_name(""), last_name(""), nickname(""), phone_number(""), darkest_secret("") {}
+Contact::Contact() : perfect_input() {}
 
-const std::string &Contact::getFirstName() const { return this->first_name; }
-const std::string &Contact::getLastName() const { return this->last_name; }
-const std::string &Contact::getNickName() const { return this->nickname; }
-const std::string &Contact::getPhoneNumber() const { return this->phone_number; }
-const std::string &Contact::getDarkestSecret() const { return this->darkest_secret; }
-
-void Contact::setFirstName(std::string first_name) {
-	this->first_name = first_name;
-}
-
-void Contact::setLastName(std::string last_name) {
-	this->last_name = last_name;
-}
-
-void Contact::setNickName(std::string nickname) {
-	this->nickname = nickname;
-}
-
-void Contact::setPhoneNumber(std::string phone_number) {
-	this->phone_number = phone_number;
-}
-
-void Contact::setDarkestSecret(std::string darkest_secret) {
-	this->darkest_secret = darkest_secret;
-}
+void Contact::setUserInput(const user_input_t &perfect_input) { this->perfect_input = perfect_input; }
+const user_input_t Contact::getUserInput() const { return this->perfect_input; }
+const std::string &Contact::getFirstName() const { return this->perfect_input.first_name; }
+const std::string &Contact::getLastName() const { return this->perfect_input.last_name; }
+const std::string &Contact::getNickName() const { return this->perfect_input.nickname; }
+const std::string &Contact::getPhoneNumber() const { return this->perfect_input.phone_number; }
+const std::string &Contact::getDarkestSecret() const { return this->perfect_input.darkest_secret; }
