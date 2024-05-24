@@ -10,9 +10,11 @@ class PhoneBook {
   public:
     PhoneBook();
 
-    void add_contact(const user_input_t &user_input);
     void add_CMD();
+    void add_contact(const user_input_t &user_input);
+    void search_CMD();
     void display_contacts();
+    void search_contact(const int idx);
 };
 
 #endif

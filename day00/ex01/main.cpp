@@ -17,7 +17,7 @@ int main() {
             break;
         else if (cmd == "ADD")
             pb.add_CMD();
-        else if (cmd == "DISPLAY")
-            pb.display_contacts();
+        else if (cmd == "SEARCH")
+            pb.search_CMD();
     }
 }

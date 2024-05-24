@@ -1,5 +1,6 @@
 #include <string>
 #define RED "\033[1;31m"
+#define CYAN "\033[0;36m"
 #define RESET "\033[0m"
 
 typedef struct user_input_s {
