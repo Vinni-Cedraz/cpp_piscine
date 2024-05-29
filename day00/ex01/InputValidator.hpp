@@ -11,19 +11,23 @@ typedef struct user_input_s {
     std::string darkest_secret;
 } user_input_t;
 
-typedef struct prompts_and_inputs {
+typedef struct prompts {
     std::string prompt;
     std::string *input;
     std::string error_message;
-} prompts_and_inputs_t;
+} prompts_t;
 
-class Parser {
+class InputValidator {
   private:
     int number_of_prompts;
-	prompts_and_inputs_t prompts_and_inputs[5];
+    prompts_t prompts[5];
 
   public:
-	Parser();
+    InputValidator();
     void parse_input(user_input_t &perfect_input);
-    void read_print_evaluate_loop(prompts_and_inputs_t prompts_and_inputs[]);
+    bool doesntHaveLetters(std::string phone_number);
+    void read_print_evaluate_loop(prompts_t prompts[]);
+    void removeConsecutiveSpaces(std::string &data);
+    void removeOuterSpaces(std::string &data);
+    void cleanContactData(std::string &str);
 };

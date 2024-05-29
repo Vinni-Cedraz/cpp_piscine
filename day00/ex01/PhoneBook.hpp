@@ -6,6 +6,7 @@ class PhoneBook {
   private:
     Contact contacts[8];
     int idx;
+	int	contacts_count;
 
   public:
     PhoneBook();

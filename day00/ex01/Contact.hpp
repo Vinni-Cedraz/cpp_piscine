@@ -1,11 +1,11 @@
 #ifndef CONTACT_HPP
 #define CONTACT_HPP
 
-#include "Parser.hpp"
+#include "InputValidator.hpp"
 
 class Contact {
   private:
-    user_input_t perfect_input;
+    user_input_t complete_input;
 
   public:
     Contact();
@@ -16,7 +16,9 @@ class Contact {
     const std::string &getDarkestSecret() const;
     const user_input_t getUserInput() const;
 
-    void setUserInput(const user_input_t &perfect_input);
+    bool isValidPhoneNumber(std::string &phone_number);
+    void setUserInput(const user_input_t &complete_input);
+	void cleanContactData(std::string &str);
 };
 
 #endif
