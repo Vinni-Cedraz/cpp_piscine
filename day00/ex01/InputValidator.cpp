@@ -1,4 +1,4 @@
-#include "InputValidator.hpp"
+#include "PhoneBook.hpp"
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
@@ -20,36 +20,37 @@ void InputValidator::parse_input(user_input_t &final_input) {
 void InputValidator::read_print_evaluate_loop(prompts_t prompts[]) {
     for (int i = 0; i < number_of_prompts; ++i) {
         show_prompt_and_get_input(prompts[i]);
-        while (prompts[i].input->empty()) {
-            show_prompt_and_get_input(prompts[i]);
+        if ((3 == i) && hasLetters(*prompts[i].input)) {
+            std::cerr << RED "Invalid phone number" RESET << std::endl;
+            i--;
+        } else if (prompts[i].input->empty()) {
+            std::cout << prompts[i].error_message << std::endl;
+			i--;
         }
     }
 }
 
 static void show_prompt_and_get_input(prompts_t prompts) {
+    PhoneBook pb;
     std::cout << prompts.prompt;
     if (!std::getline(std::cin, *prompts.input)) {
-        std::cerr << prompts.error_message << std::endl;
-        clearerr(stdin);
-        std::cin.clear();
+        std::cout << std::endl;
+        pb.clean_stdin();
     }
 }
 
-bool InputValidator::doesntHaveLetters(std::string phone_number) {
+bool InputValidator::hasLetters(std::string phone_number) {
     for (std::size_t index = 0; index < phone_number.length(); ++index) {
         if (!std::isdigit(phone_number[index]) && phone_number[index] != '+') {
-            std::cerr << RED "Invalid phone number" RESET << std::endl;
             phone_number.clear();
-            return (false);
+            return (true);
         }
     }
-    return (true);
+    return (false);
 }
 
 void InputValidator::removeConsecutiveSpaces(std::string &str) {
-    int size;
-
-    size = str.length();
+    int size = str.length();
     for (int i = 0; i < size; i++) {
         if ((str[i] == ' ' || str[i] == '\t') && (str[i + 1] == ' ' || str[i + 1] == '\t')) {
             str.erase(i, 1);
@@ -60,9 +61,7 @@ void InputValidator::removeConsecutiveSpaces(std::string &str) {
 }
 
 void InputValidator::removeOuterSpaces(std::string &str) {
-    int size;
-
-    size = str.length();
+    int size = str.length();
     while (size > 0 && (str[size - 1] == ' ' || str[size - 1] == '\t')) {
         str.erase(size - 1, 1);
         size = str.length();

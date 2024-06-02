@@ -25,7 +25,7 @@ class InputValidator {
   public:
     InputValidator();
     void parse_input(user_input_t &perfect_input);
-    bool doesntHaveLetters(std::string phone_number);
+    bool hasLetters(std::string phone_number);
     void read_print_evaluate_loop(prompts_t prompts[]);
     void removeConsecutiveSpaces(std::string &data);
     void removeOuterSpaces(std::string &data);
