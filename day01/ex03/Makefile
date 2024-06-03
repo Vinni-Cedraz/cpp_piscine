@@ -1,5 +1,6 @@
-CXX = c++ CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
-TARGET = Moar_brainz
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
+TARGET = violence
 SRCS = *.cpp *.hpp
 
 all: $(TARGET)
