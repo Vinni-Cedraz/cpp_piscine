@@ -2,3 +2,5 @@
 #define INFO "I cannot believe adding extra bacon costs more money. You didn’t put enough bacon in my burger! If you did, I wouldn’t be asking for more!"
 #define WARNING "I think I deserve some extra bacon for free. I’ve been coming here for years and you just started working here last month."
 #define ERROR "This is unacceptable! I want a manager, I want a manager, I want a manager!"
+#define UNEXPECTED "I’m sorry, I thought this was America!"
+#define TABLE_SIZE 10000

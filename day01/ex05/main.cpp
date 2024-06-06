@@ -23,4 +23,14 @@ int main(void) {
 	harl.complain("DEBUG");
 	harl.complain("ERROR");
 	harl.complain("INFO");
+
+	std::cout << "---------------------------------------------------------\n";
+	std::cout << "UNEXISTANT LEVELS: Blabla -> \"I'm not a real level\" -> warningg -> warning -> wa -> war -> ""\n\n";
+	harl.complain("Blabla");
+	harl.complain("I'm not a real level");
+	harl.complain("warningg");
+	harl.complain("warning");
+	harl.complain("wa");
+	harl.complain("war");
+	harl.complain("");
 }
