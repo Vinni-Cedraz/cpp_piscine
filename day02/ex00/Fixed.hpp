@@ -1,17 +1,17 @@
-class FixedPointNumber {
+class Fixed {
   private:
     int _value;
     static const int _fractional_bits = 8;
 
   public:
     // default constructor
-    FixedPointNumber();
+    Fixed();
     // copy constructor
-    FixedPointNumber(const FixedPointNumber &number);
+    Fixed(const Fixed &number);
     // assignement copy constructor
-    FixedPointNumber &operator=(const FixedPointNumber &number);
+    Fixed &operator=(const Fixed &number);
     // destructor
-    ~FixedPointNumber();
+    ~Fixed();
     // getter for value
     int getRawBits(void) const;
     void setRawBits(int const raw);

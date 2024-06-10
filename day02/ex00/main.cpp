@@ -1,9 +1,9 @@
-#include "FixedPointNumber.hpp"
+#include "Fixed.hpp"
 #include <iostream>
 int main(void) {
-    FixedPointNumber a;
-    FixedPointNumber b(a);
-    FixedPointNumber c;
+    Fixed a;
+    Fixed b(a);
+    Fixed c;
     c = b;
     std::cout << a.getRawBits() << std::endl;
     std::cout << b.getRawBits() << std::endl;
