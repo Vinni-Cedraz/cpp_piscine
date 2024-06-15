@@ -24,18 +24,21 @@ ClapTrap ClapTrap::operator=(const ClapTrap &other) {
 
 void ClapTrap::attack(const std::string &target) {
     OUT("ClapTrap ", name, " attacks ", target, " causing ", damage, " points of damage!");
-	RED("{ ", --energy, " points of energy left.}");
+    RED("{ ", --energy, " points of energy left.}");
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
     OUT("ClapTrap ", name, " takes ", amount, " points of damage!", "", "");
     hit = hit - amount;
-	RED("{ Hit went down to ", hit, " }");
+    RED("{ Hit went down to ", hit, " }");
 }
 
 void ClapTrap::beRepaired(unsigned int amount) {
     OUT("ClapTrap ", name, " heals ", amount, " points of health!", "", "");
     hit = hit + amount;
-	GREEN("{ Hit restored to ", hit, " }");
-	RED("{ ", --energy, " points of energy left. }");
+    GREEN("{ Hit restored to ", hit, " }");
+    RED("{ ", --energy, " points of energy left. }");
 }
+
+// destructor
+ClapTrap::~ClapTrap() { std::cout << "ScavTrap" << name << " is destroyed!" << std::endl; }

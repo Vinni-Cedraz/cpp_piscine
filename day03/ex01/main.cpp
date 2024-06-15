@@ -2,12 +2,11 @@
 #include "ScavTrap.hpp"
 
 int main() {
-    ClapTrap clap("James");
-    clap.attack("Kim Jong Un");
-    clap.takeDamage(5);
-    clap.beRepaired(5);
-    clap.takeDamage(5);
-    clap.takeDamage(5);
-	ScavTrap kevin;
-	kevin.attack("Andrey");
+    ScavTrap scav("James");
+    scav.attack("Kim Jong Un");
+    scav.takeDamage(5);
+    scav.beRepaired(5);
+    scav.takeDamage(5);
+    scav.takeDamage(5);
+	scav.guardGate();
 }
