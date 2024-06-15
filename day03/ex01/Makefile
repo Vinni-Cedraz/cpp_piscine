@@ -1,6 +1,6 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
-TARGET = Aaaaand...OPEN!
+TARGET = "Serena, my love!"
 SRCS = *.cpp
 
 all: $(TARGET)

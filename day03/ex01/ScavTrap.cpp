@@ -3,7 +3,7 @@
 ScavTrap::ScavTrap() : ClapTrap("Anonymous ScavTrap") {};
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
-    std::cout << "ScavTrap" << name << " is born!" << std::endl;
+    std::cout << "ScavTrap " << name << " is born!" << std::endl;
     setHit(100);
     setEnergy(50);
     setDamage(20);
@@ -16,7 +16,7 @@ void ScavTrap::setName(std::string name) { this->name = name; }
 
 // destructor
 ScavTrap::~ScavTrap() {
-	std::cout << "ScavTrap" << name << " is destroyed!" << std::endl;
+	std::cout << "ScavTrap " << name << " is destroyed!" << std::endl;
 }
 
 void ScavTrap::attack(const std::string &target) {

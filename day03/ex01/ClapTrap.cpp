@@ -41,4 +41,4 @@ void ClapTrap::beRepaired(unsigned int amount) {
 }
 
 // destructor
-ClapTrap::~ClapTrap() { std::cout << "ScavTrap" << name << " is destroyed!" << std::endl; }
+ClapTrap::~ClapTrap() { std::cout << "ClapTrap " << name << " is destroyed!" << std::endl; }
