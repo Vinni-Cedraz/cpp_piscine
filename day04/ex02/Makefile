@@ -1,9 +1,9 @@
-NAME = Polymorphism
+NAME = Abstract_class
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 CXX = c++
 PATH_OBJS = ./objects/
 
-SRCS = Animal Dog Cat WrongAnimal WrongCat
+SRCS = Animal Dog Cat WrongAnimal WrongCat Brain
 MAIN = main
 
 OBJS = $(SRCS:%=$(PATH_OBJS)%.o)

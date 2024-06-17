@@ -1,8 +1,8 @@
 #include "Animal.hpp"
-#include "WrongAnimal.hpp"
-#include "WrongCat.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 #include <cstdlib>
 #include <iostream>
 
@@ -25,10 +25,10 @@ void correct_constructors() {
 }
 
 void wrong_constructors() {
-	std::cout << "TEST 1 - WRONG Constructors" << std::endl;
-	WrongAnimal *i = new WrongCat();
+    std::cout << "TEST 1 - WRONG Constructors" << std::endl;
+    WrongAnimal *i = new WrongCat();
     i->makeSound(); // will print "Wrong meow"
-	delete i;
+    delete i;
 }
 
 void copy_assingment_operator() {
@@ -81,9 +81,27 @@ void virtual_makesound() {
 }
 } // namespace tests
 
-int main() {
+int main(void) {
     tests::correct_constructors();
-	tests::wrong_constructors();
+    tests::wrong_constructors();
     tests::copy_assingment_operator();
     tests::virtual_makesound();
+    std::cout << std::endl;
+    {
+        std::cout << "FINAL VIRTUAL METHOD TEST" << std::endl;
+        std::cout << "Constructors:" << std::endl;
+        Dog dog;
+        Cat cat;
+        // Animal	instance;
+        Animal *a = &dog;
+        Animal *b = &cat;
+        std::cout << std::endl;
+
+        a->makeSound();
+        b->makeSound();
+
+        std::cout << std::endl;
+        std::cout << "Destructors" << std::endl;
+    }
+    return (0);
 }
