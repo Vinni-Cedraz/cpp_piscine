@@ -24,6 +24,7 @@ Dog &Dog::operator=(Dog const &other) {
     std::cout << CYN "Dog Copy Assignment Operator Called" RESET << std::endl;
     if (this != &other) {
         this->type = other.type;
+		this->brain = new Brain();
         *(this->brain) = *(other.brain);
     }
     return (*this);

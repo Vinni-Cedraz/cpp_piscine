@@ -20,7 +20,7 @@ Brain::~Brain() { std::cout << RED "Brain: Destructor Called" RESET << std::endl
 Brain &Brain::operator=(const Brain &other) {
     std::cout << CYN "Brain: Copy Assignment Operator Called" RESET << std::endl;
     if (this != &other)
-        std::copy(other._ideas, other._ideas + 100, this->_ideas);
+        std::copy(other._ideas, &other._ideas[100], this->_ideas);
     return (*this);
 }
 

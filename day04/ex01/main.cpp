@@ -1,18 +1,16 @@
 #include "Animal.hpp"
-#include "WrongAnimal.hpp"
-#include "WrongCat.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 #include <cstdlib>
 #include <iostream>
 
 #define ANIMALS 6
 
 namespace tests {
-void correct_constructors() {
-    std::cout << "TEST 1" << std::endl;
-
-    std::cout << "Correct constructors:" << std::endl;
+void correct_default_constructors() {
+    std::cout << YEL << "TEST 1 - Correct default constructors" << RESET << std::endl;
     Animal *i = new Dog();
     Animal *j = new Cat();
     std::cout << std::endl;
@@ -24,15 +22,29 @@ void correct_constructors() {
     std::cout << std::endl;
 }
 
-void wrong_constructors() {
-	std::cout << "TEST 1 - WRONG Constructors" << std::endl;
-	WrongAnimal *i = new WrongCat();
-    i->makeSound(); // will print "Wrong meow"
-	delete i;
+void correct_copy_constructors() {
+    std::cout << YEL << "TEST 2 - Correct COPY Constructors" << RESET << std::endl;
+
+    Dog a;
+    a.setIdeaOfBrain(99, "Misto Quente");
+    Dog b(a);
+    std::cout << "Dog b -> Brain last idea (must be \"misto quente\"):" << std::endl;
+    std::cout << b.getIdeaOfBrain(99) << std::endl;
+    std::cout << YEL << "TEST 3 - Correct COPY Constructor with assignment overload" << RESET << std::endl;
+    Dog c = a;
+    std::cout << "Dog c -> Brain last idea (must be \"misto quente\"):" << std::endl;
+    std::cout << c.getIdeaOfBrain(99) << std::endl;
 }
 
-void copy_assingment_operator() {
-    std::cout << "TEST 2 (COPY ASSIGNMENT OPERATOR)" << std::endl;
+void wrong_constructors() {
+    std::cout << YEL << "TEST 4 - WRONG Constructors" << RESET << std::endl;
+    WrongAnimal *i = new WrongCat();
+    i->makeSound(); // will print "default wrong animal sound"
+    delete i;
+}
+
+void copy_assignment_operator() {
+    std::cout << YEL << "TEST 5 (COPY ASSIGNMENT OPERATOR)" << RESET << std::endl;
 
     std::cout << "Constructors:" << std::endl;
     Dog dog1;
@@ -48,7 +60,7 @@ void copy_assingment_operator() {
     std::cout << "Dog 2 -> Brain ideas:" << std::endl;
     for (int i = 0; i < 10; i++)
         std::cout << dog2.getIdeaOfBrain(i) << std::endl;
-    std::cout << "Now we copy the dog1 to dog2: " << std::endl;
+    std::cout << "Now we copy the dog1 to dog2 (dog2 = dog1): " << std::endl;
     dog2 = dog1;
     std::cout << "Dog 2 -> Brain ideas:" << std::endl;
     for (int i = 0; i < 10; i++)
@@ -57,7 +69,7 @@ void copy_assingment_operator() {
 }
 
 void virtual_makesound() {
-    std::cout << "TEST 3 (ARRAY OF ANIMALS)" << std::endl;
+    std::cout << "TEST 6 (ARRAY OF ANIMALS)" << std::endl;
 
     // return error and exit if ANIMALS is an odd number
     if (ANIMALS % 2) {
@@ -79,11 +91,23 @@ void virtual_makesound() {
     }
     std::cout << std::endl;
 }
+
+void scope_deep_copy() {
+    std::cout << YEL << "TEST 7 (SCOPE DEEP COPY)" << RESET << std::endl;
+    Dog a;
+    { Dog tmp = a; }
+    std::cout << WHT << "Given Dog tmp = a; AND tmp leaves scope." << std::endl;
+    std::cout << "THEN Dog a still exists!" RESET << std::endl;
+    std::cout << "Dog a sound:" << std::endl;
+    a.makeSound(); // must return "The dog say: Auu!"
+}
 } // namespace tests
 
 int main() {
-    tests::correct_constructors();
-	tests::wrong_constructors();
-    tests::copy_assingment_operator();
+    tests::correct_default_constructors();
+    tests::correct_copy_constructors();
+    tests::wrong_constructors();
+    tests::copy_assignment_operator();
     tests::virtual_makesound();
+    tests::scope_deep_copy();
 }

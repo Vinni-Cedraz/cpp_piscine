@@ -19,7 +19,7 @@ Brain::~Brain() { std::cout << RED "Brain Destructor Called" RESET << std::endl;
 /* OPERATORS OVERLOADING */
 Brain &Brain::operator=(const Brain &other) {
     std::cout << CYN "Brain Copy Assignment Operator Called" RESET << std::endl;
-    std::copy(other.ideas, &other.ideas[99], this->ideas);
+    std::copy(other.ideas, &other.ideas[100], this->ideas);
     return (*this);
 }
 
