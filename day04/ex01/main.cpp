@@ -3,6 +3,7 @@
 #include "Dog.hpp"
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
+#include "color.hpp"
 #include <cstdlib>
 #include <iostream>
 

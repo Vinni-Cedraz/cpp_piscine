@@ -1,5 +1,6 @@
 #include "Brain.hpp"
 #include <iostream>
+#include "color.hpp"
 
 /* CONSTRUCTORS AND DESTRUCTOR */
 Brain::Brain() {

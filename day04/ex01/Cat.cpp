@@ -1,4 +1,5 @@
 #include "Cat.hpp"
+#include "color.hpp"
 #include <iostream>
 
 /* CONSTRUCTORS AND DESTRUCTOR */

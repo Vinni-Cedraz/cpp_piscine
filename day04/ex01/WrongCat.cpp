@@ -1,4 +1,5 @@
 #include "WrongCat.hpp"
+#include "color.hpp"
 #include <iostream>
 
 /* CONSTRUCTORS AND DESTRUCTOR */

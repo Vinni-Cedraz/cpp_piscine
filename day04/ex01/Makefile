@@ -3,7 +3,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 CXX = c++
 PATH_OBJS = ./objects/
 
-SRCS = Animal Dog Cat WrongAnimal WrongCat Brain
+SRCS = Animal Dog Cat WrongAnimal WrongCat Brain color
 MAIN = main
 
 OBJS = $(SRCS:%=$(PATH_OBJS)%.o)

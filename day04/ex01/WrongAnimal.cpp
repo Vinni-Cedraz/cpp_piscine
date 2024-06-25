@@ -1,4 +1,5 @@
 #include "WrongAnimal.hpp"
+#include "color.hpp"
 #define HRED "\x1B[91m"
 #include <iostream>
 

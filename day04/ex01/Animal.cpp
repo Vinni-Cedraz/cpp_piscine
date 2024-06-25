@@ -1,5 +1,6 @@
 #include "Animal.hpp"
 #include <iostream>
+#include "color.hpp"
 
 /* CONSTRUCTORS AND DESTRUCTOR */
 Animal::Animal() {
