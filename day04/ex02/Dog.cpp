@@ -2,13 +2,13 @@
 #include <iostream>
 
 /* CONSTRUCTORS AND DESTRUCTOR */
-Dog::Dog() : Animal() {
+Dog::Dog() : Animal(), brain() {
     std::cout << BLU "Dog: Default Constructor Called" RESET << std::endl;
     this->type = "Dog";
     this->brain = new Brain();
 }
 
-Dog::Dog(const Dog &obj) : Animal(obj) {
+Dog::Dog(const Dog &obj) : Animal(obj), brain() {
     std::cout << BLU "Dog: Copy Constructor Called" RESET << std::endl;
     if (this != &obj)
         *this = obj;
@@ -24,8 +24,8 @@ Dog &Dog::operator=(Dog const &other) {
     std::cout << CYN "Dog: Copy Assignment Operator Called" RESET << std::endl;
     if (this != &other) {
         this->type = other.type;
-		this->brain = new Brain();
-        *(this->brain) = *(other.brain);
+		delete this->brain;
+        this->brain = new Brain(*other.brain);
     }
     return (*this);
 }

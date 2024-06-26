@@ -2,13 +2,13 @@
 #include <iostream>
 
 /* CONSTRUCTORS AND DESTRUCTOR */
-Cat::Cat() : Animal() {
+Cat::Cat() : Animal(), brain() {
     std::cout << BLU "Cat: Default Constructor Called" RESET << std::endl;
     this->type = "Cat";
     this->brain = new Brain();
 }
 
-Cat::Cat(const Cat &obj) : Animal(obj) {
+Cat::Cat(const Cat &obj) : Animal(obj), brain() {
     std::cout << BLU "Cat: Copy Constructor Called" RESET << std::endl;
     if (this != &obj)
         *this = obj;
@@ -24,8 +24,8 @@ Cat &Cat::operator=(Cat const &other) {
     std::cout << CYN "Cat: Copy Assignment Operator Called" RESET << std::endl;
     if (this != &other) {
         this->type = other.type;
-		this->brain = new Brain();
-        this->brain = other.brain;
+		delete this->brain;
+		this->brain = new Brain(*other.brain);
     }
     return (*this);
 }

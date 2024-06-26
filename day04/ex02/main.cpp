@@ -102,14 +102,13 @@ void scope_deep_copy() {
 }
 } // namespace tests
 
-
 int main(void) {
     tests::correct_default_constructors();
-	tests::correct_copy_constructors();
-	tests::scope_deep_copy();
+    tests::correct_copy_constructors();
     tests::wrong_constructors();
     tests::copy_assignment_operator();
     tests::virtual_makesound();
+    tests::scope_deep_copy();
     std::cout << std::endl;
     {
         std::cout << "FINAL VIRTUAL METHOD TEST" << std::endl;
@@ -127,5 +126,4 @@ int main(void) {
         std::cout << std::endl;
         std::cout << "Destructors" << std::endl;
     }
-    return (0);
 }
