@@ -97,10 +97,14 @@ void scope_deep_copy() {
     std::cout << YEL << "TEST 7 (SCOPE DEEP COPY)" << RESET << std::endl;
     Dog a;
     { Dog tmp = a; }
+    Cat b;
+    { Cat cat_tmp = b; }
     std::cout << WHT << "Given Dog tmp = a; AND tmp leaves scope." << std::endl;
     std::cout << "THEN Dog a still exists!" RESET << std::endl;
     std::cout << "Dog a sound:" << std::endl;
     a.makeSound(); // must return "The dog say: Auu!"
+    std::cout << WHT "THEN, same for Cat, Cat sound:" RESET << std::endl;
+    b.makeSound(); // must return "The cat say: Auu!"
 }
 } // namespace tests
 
