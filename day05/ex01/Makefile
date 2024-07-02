@@ -1,9 +1,9 @@
-NAME = "Mommy, when I grow up, I_want to be a bureaucrat!"
+NAME = "Form up, maggots!"
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 CXX = c++
 PATH_OBJS = ./objects/
 
-SRCS = Bureaucrat
+SRCS = Bureaucrat Form
 MAIN = main
 
 OBJS = $(SRCS:%=$(PATH_OBJS)%.o)
