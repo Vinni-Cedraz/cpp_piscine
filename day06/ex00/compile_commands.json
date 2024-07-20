@@ -1,0 +1,34 @@
+[
+ {
+  "directory": "/data/data/com.termux/files/home/cpp_piscine/day06/ex00",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-std=c++98",
+   "-g3",
+   "-c",
+   "ScalarConverter.cpp",
+   "-o",
+   "objects/ScalarConverter.o"
+  ],
+  "file": "ScalarConverter.cpp"
+ },
+ {
+  "directory": "/data/data/com.termux/files/home/cpp_piscine/day06/ex00",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-std=c++98",
+   "-g3",
+   "-c",
+   "main.cpp",
+   "-o",
+   "objects/main.o"
+  ],
+  "file": "main.cpp"
+ }
+]
