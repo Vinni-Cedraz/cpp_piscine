@@ -3,7 +3,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 CXX = c++
 PATH_OBJS = ./objects/
 
-SRCS = Base
+SRCS = Base A B C
 MAIN = main
 
 OBJS = $(SRCS:%=$(PATH_OBJS)%.o)
