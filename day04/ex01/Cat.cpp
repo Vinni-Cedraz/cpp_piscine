@@ -11,7 +11,8 @@ Cat::Cat() : Animal() {
 
 Cat::Cat(const Cat &obj) : Animal(obj) {
     std::cout << BLU "Cat Copy Constructor Called" RESET << std::endl;
-    *this = obj;
+    *this = Cat();
+	*this = obj;
 }
 
 Cat::~Cat() {
@@ -24,7 +25,6 @@ Cat &Cat::operator=(Cat const &other) {
     std::cout << CYN "Cat Copy Assignment Operator Called" RESET << std::endl;
     if (this != &other) {
         this->type = other.type;
-        this->brain = new Brain();
         *(this->brain) = *(other.brain);
     }
     return (*this);

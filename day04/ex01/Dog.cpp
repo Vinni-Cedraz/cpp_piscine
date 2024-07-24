@@ -9,10 +9,10 @@ Dog::Dog() : Animal() {
     this->brain = new Brain();
 }
 
-Dog::Dog(const Dog &obj) : Animal(obj) {
+Dog::Dog(const Dog &obj) : Animal(obj), brain() {
     std::cout << BLU "Dog Copy Constructor Called" RESET << std::endl;
-    if (this != &obj)
-        *this = obj;
+    this->brain = new Brain();
+    *this = obj;
 }
 
 Dog::~Dog() {
@@ -25,7 +25,6 @@ Dog &Dog::operator=(Dog const &other) {
     std::cout << CYN "Dog Copy Assignment Operator Called" RESET << std::endl;
     if (this != &other) {
         this->type = other.type;
-		this->brain = new Brain();
         *(this->brain) = *(other.brain);
     }
     return (*this);
