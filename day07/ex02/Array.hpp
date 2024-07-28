@@ -1,31 +1,29 @@
 #pragma once
-
 #include <exception>
-template <typename T>
-class Array {
- private:
+
+template <typename T> class Array {
+private:
   T *_array;
   unsigned int _size;
 
- public:
+public:
   // constructors:
   Array() : _array(), _size() {}
   Array(unsigned int size) : _array(), _size(size) {
-    if (size) _array = new T[size];
+    if (size)
+      _array = new T[size];
   }
   Array(const Array &other) : _array(), _size(other._size) {
-    if (_size) {
+    if (this != &other && _size) {
       _array = new T[_size];
-      _array = other;
+      *this = other;
     }
   }
   // operators:
   Array &operator=(const Array &other) {
-    if (this != &other) {
-      _size = other._size;
-      for (unsigned int i = 0; i < _size; i++) {
-        _array[i] = other._array[i];
-      }
+    _size = other._size;
+    for (unsigned int i = 0; i < _size; i++) {
+      _array[i] = other._array[i];
     }
     return *this;
   }
@@ -35,7 +33,8 @@ class Array {
   };
   // operators:
   T &operator[](unsigned int index) {
-    if (index >= _size) throw OutOfLimits();
+    if (index >= _size)
+      throw OutOfLimits();
     return _array[index];
   }
   // methods:
