@@ -1,13 +1,13 @@
-#include "Array.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+
+#include "Array.hpp"
 #define CYAN "\033[36m"
 #define RESET "\033[0m"
 
 #define MAX_VAL 5
 int main(int, char **) {
-
   std::cout << CYAN "Proving that it works just like an array of ints:\n" RESET;
   Array<int> my_array_class(MAX_VAL);
   int *default_array = new int[MAX_VAL];
@@ -66,4 +66,15 @@ int main(int, char **) {
 
   a = b;
   std::cout << "Array a size should now be 10: " << a.size() << std::endl;
+  std::cout << "Array unsigned int constructor shoud initialize n elements to 0:" << std::endl;
+
+  Array<int> c(10);
+  for (unsigned int i = 0; i != 10; i++) {
+    std::cout << c[i] << " " << std::endl;
+  }
+  Array<int> d = c;
+  std::cout << "Should work the same with a copy constructor: " << std::endl;
+  for (unsigned int i = 0; i != 10; i++) {
+    std::cout << d[i] << " " << std::endl;
+  }
 }
