@@ -1,9 +1,9 @@
-NAME = span
+NAME = MutantStack
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -MMD -MP
 CXX = c++
 PATH_OBJS = ./objects/
 
-SRCS = Span
+SRCS = MutantStack
 MAIN = main
 
 OBJS = $(SRCS:%=$(PATH_OBJS)%.o)
@@ -32,7 +32,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm compile_commands.json
+	rm -f compile_commands.json
 
 re: fclean all
 

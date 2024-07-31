@@ -45,3 +45,18 @@ unsigned int Span::shortestSpan() const {
   }
   return minSpan;
 }
+
+// operator overload
+std::ostream &operator<<(std::ostream &out, const Span &rht) {
+  const unsigned int size = rht.numbers.size();
+  if (size > 0) {
+    out << "Span[" << size << "]: ";
+    for (size_t i = 0; i < size; i++) {
+      out << rht.numbers[i];
+      if (i < size - 1) out << ", ";
+    }
+  } else {
+    out << "Span is empty";
+  }
+  return out;
+}
