@@ -18,7 +18,7 @@ int main() {
   std::vector<int>::iterator i;
   std::cout << CYAN "Looking for 42: " RESET << std::endl;
   i = easyfind(map, 42);
-  std::cout << CYAN "Looking for 43: " RESET << std::endl;
+  std::cout << CYAN "\n\nLooking for 43: " RESET << std::endl;
   i = easyfind(map, 43);
   (void)i;
 }

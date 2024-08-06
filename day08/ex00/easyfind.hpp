@@ -11,6 +11,7 @@
 template <typename T>
 typename T::iterator easyfind(T &container, int b) {
   const typename T::iterator it = std::find(container.begin(), container.end(), b);
+  std::cout << "easyfind called\n";
   if (it == container.end()) {
     std::cerr << RED "Element Not Found!" RESET << std::endl;
   } else {
