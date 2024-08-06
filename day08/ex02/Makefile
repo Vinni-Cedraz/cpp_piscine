@@ -1,29 +1,20 @@
 NAME = MutantStack
-FLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -MMD -MP
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 CXX = c++
 PATH_OBJS = ./objects/
 
-SRCS = MutantStack
-MAIN = main
-
-OBJS = $(SRCS:%=$(PATH_OBJS)%.o)
-MAIN_OBJ = $(MAIN:%=$(PATH_OBJS)%.o)
-
-DEPS = $(OBJS:.o=.d) $(MAIN_OBJ:.o=.d)
+SRCS = main.cpp
+OBJS = $(patsubst %.cpp,$(PATH_OBJS)%.o,$(SRCS))
 
 all: $(NAME)
 
-run:
+run: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
 
-$(NAME): $(OBJS) $(MAIN_OBJ)
+$(NAME): $(OBJS)
 	$(CXX) $(FLAGS) $^ -o $(NAME)
 
-$(PATH_OBJS)%.o: %.cpp
-	@mkdir -p $(PATH_OBJS)
-	$(CXX) $(FLAGS) -c $< -o $@
-
-$(MAIN_OBJ): $(MAIN).cpp
+$(PATH_OBJS)%.o: %.cpp MutantStack.hpp
 	@mkdir -p $(PATH_OBJS)
 	$(CXX) $(FLAGS) -c $< -o $@
 
@@ -32,8 +23,5 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f compile_commands.json
 
 re: fclean all
-
--include $(DEPS)
