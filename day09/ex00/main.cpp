@@ -78,8 +78,17 @@ int main(int argc, char **argv) {
   std::map<std::string, float> csv = create_database("data.csv");
   std::list<std::pair<std::string, float> > input = create_database_list(argv[1]);
   std::cout << csv << std::endl;
-  std::cout << input << std::endl;
+  std::cout << "perfect_input: " << input << std::endl;
+  std::list<std::pair<std::string, float> > output;
+  std::list<std::pair<std::string, float> >::iterator out_it = output.begin();
 
+  for (std::list<std::pair<std::string, float> >::const_iterator it = input.begin(); it != input.end(); it++) {
+    out_it = output.insert(out_it, *it);
+    out_it->second = csv[it->first] * it->second;
+    out_it++;
+  }
+
+  std::cout << "output: " << output << std::endl;
   // BitcoinExchange exchange;
   //
   // exchange.runExchange(file);
