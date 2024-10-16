@@ -1,11 +1,10 @@
-#include <sstream>
-
 #include "BitcoinExchange.hpp"
+#include <sstream>
 
 // important
 BitcoinExchange::BitcoinExchange(const char *filename) {
   create_database("data.csv");
-  create_input_list(filename);
+  create_input_queue(filename);
 }
 
 // useless cannonical stuff:
@@ -21,48 +20,53 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &assign) {
   return *this;
 }
 
-// main logic:
 void BitcoinExchange::calculate_prices(void) {
-  std::list<std::pair<std::string, float> >::iterator out_it = prices.begin();
-
-  for (std::list<std::pair<std::string, float> >::iterator in_it = input.begin(); in_it != input.end(); in_it++) {
-    out_it = prices.insert(out_it, *in_it);
-    // parsing
-    if (value_error(out_it, in_it->second) || format_error(out_it)) {
-      out_it++;
-      continue;
-    } else if (!csv[in_it->first]) {
-      if (!valid_date_format(out_it->first)) {
-        out_it->first = "Error: bad input => ";
-        out_it->first.append(in_it->first);
-      } else {
-        std::map<std::string, float>::iterator lower = csv.lower_bound(out_it->first);
-        --lower;
-        out_it->second = lower->second * in_it->second;
-      }
-      out_it++;
-      continue;
-    }
-    // standard operation
-    out_it->second = csv[in_it->first] * in_it->second;
-    out_it++;
+  while (!input.empty()) {
+    std::pair<std::string, float> price = pop_front(input);
+    if (false == has_errors(price)) {
+		calculate_price(price);
+	}
+    prices.push(price);
   }
 }
 
-std::list<std::pair<std::string, float> > BitcoinExchange::get_prices() { return this->prices; }
+bool BitcoinExchange::has_errors(std::pair<std::string, float> &price) {
+  if (format_error(price) || value_error(price, price.second)) {
+    return true;
+  } else if (!valid_date_format(price.first)) {
+    const std::string input = price.first;
+    price.first = "Error: invalid date => ";
+    price.first.append(input);
+    return true;
+  }
+  return false;
+}
+
+void BitcoinExchange::calculate_price(std::pair<std::string, float> &price) {
+  if (!csv[price.first]) {
+    std::map<std::string, float>::iterator lower = csv.lower_bound(price.first);
+    --lower;
+    price.second = lower->second * price.second;
+  } else {
+    price.second *= csv[price.first];
+  }
+}
+
+std::queue<std::pair<std::string, float> > BitcoinExchange::get_prices() { return this->prices; }
 
 void BitcoinExchange::create_database(const char *filename) {
   std::fstream *file = open_file(filename);
   std::map<std::string, float> database;
   std::string line;
-  std::getline(*file, line);  // Skip the first line
+  std::getline(*file, line); // Skip the first line
 
   while (std::getline(*file, line)) {
     std::istringstream iss(line);
     std::string date;
     float value;
 
-    if (line.empty()) continue;
+    if (line.empty())
+      continue;
     std::getline(iss, date, ',');
     iss >> value;
 
@@ -72,11 +76,10 @@ void BitcoinExchange::create_database(const char *filename) {
   this->csv = database;
 }
 
-void BitcoinExchange::create_input_list(const char *filename) {
+void BitcoinExchange::create_input_queue(const char *filename) {
   std::fstream *file = open_file(filename);
-  std::list<std::pair<std::string, float> > input_list;
   std::string line;
-  std::getline(*file, line);  // Skip the first linoe
+  std::getline(*file, line); // Skip the first linoe
 
   while (std::getline(*file, line)) {
     std::istringstream iss(line);
@@ -84,20 +87,20 @@ void BitcoinExchange::create_input_list(const char *filename) {
     float value;
     std::string tmp;
 
-    if (line.empty()) continue;
+    if (line.empty())
+      continue;
     if (!valid_line_format(line)) {
-      input_list.push_back(std::make_pair(line, -42));
+      input.push(std::make_pair(line, -42));
       continue;
     }
 
-    std::getline(iss, date, ' ');                              // init date:
-    std::getline(iss, tmp, '|'), std::getline(iss, tmp, ' ');  // advance to the value:
+    std::getline(iss, date, ' ');                             // init date:
+    std::getline(iss, tmp, '|'), std::getline(iss, tmp, ' '); // advance to the value:
 
     iss >> value;
-    input_list.push_back(std::make_pair(date, value));
+    input.push(std::make_pair(date, value));
   }
   delete file;
-  this->input = input_list;
 }
 
 std::fstream *open_file(const char *filename) {
@@ -112,23 +115,27 @@ std::fstream *open_file(const char *filename) {
 
 bool valid_date_format(const std::string &date) {
   int year, month, day;
-  if (sscanf(date.c_str(), "%4d-%2d-%2d", &year, &month, &day) != 3) return false;
-  if (year < 1000 || year > 9999) return false;
-  if (month < 1 || month > 12) return false;
-  if (day < 1 || day > 31) return false;
+  if (sscanf(date.c_str(), "%4d-%2d-%2d", &year, &month, &day) != 3)
+    return false;
+  if (year < 1000 || year > 9999)
+    return false;
+  if (month < 1 || month > 12)
+    return false;
+  if (day < 1 || day > 31)
+    return false;
   return true;
 }
 
-bool value_error(std::list<std::pair<std::string, float> >::iterator &it, const int value) {
-  if (value < 0 || value > 1000) {
-    it->first = "value out of bounds";
+bool value_error(std::pair<std::string, float> &curr_pair, const float value) {
+  if (curr_pair.second != -42 && (value < 0 || value > 1000)) {
+    curr_pair.first = "value out of bounds";
     return true;
   }
   return false;
 }
 
-bool format_error(std::list<std::pair<std::string, float> >::const_iterator it) {
-  if (it->second == -42) {
+bool format_error(std::pair<std::string, float> &curr_pair) {
+  if (curr_pair.second == -42) {
     return true;
   }
   return false;
@@ -136,7 +143,8 @@ bool format_error(std::list<std::pair<std::string, float> >::const_iterator it) 
 
 bool valid_line_format(const std::string line) {
   int year, month, day, value;
-  if (sscanf(line.c_str(), "%4d-%2d-%2d | %d", &year, &month, &day, &value) != 4) return false;
+  if (sscanf(line.c_str(), "%4d-%2d-%2d | %d", &year, &month, &day, &value) != 4)
+    return false;
   return true;
 }
 
@@ -149,16 +157,19 @@ std::ostream &operator<<(std::ostream &os, const std::map<std::string, float> &m
 }
 
 // essential to the program:
-std::ostream &operator<<(std::ostream &os, const std::list<std::pair<std::string, float> > &lst) {
-  for (std::list<std::pair<std::string, float> >::const_iterator it = lst.begin(); it != lst.end(); ++it) {
-    if (it->first.find("Error: bad input => ") != std::string::npos)
-      os << it->first << std::endl;
-    else if (it->second == -42)
-      os << "Error: invalid line: " << it->first << std::endl;
-    else if (it->first == "value out of bounds")
-      os << "Error: value too big or too small: " << it->second << std::endl;
+std::ostream &operator<<(std::ostream &os, std::queue<std::pair<std::string, float> > lst) {
+  while (!lst.empty()) {
+    const std::pair<std::string, float> pair = BitcoinExchange::pop_front(lst);
+    if (pair.first.find("Error: bad input => ") != std::string::npos)
+      os << pair.first << std::endl;
+    else if (pair.second == -42)
+      os << "Error: invalid line: " << pair.first << std::endl;
+    else if (pair.first == "value out of bounds")
+      os << "Error: value too big or too small: " << pair.second << std::endl;
+    else if (pair.first.find("invalid date") != std::string::npos)
+      os << pair.first << std::endl;
     else
-      os << it->first << " => " << it->second << std::endl;
+      os << pair.first << " => " << pair.second << std::endl;
   }
   return os;
 }
