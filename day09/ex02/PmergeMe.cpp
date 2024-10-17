@@ -28,6 +28,7 @@ void PmergeMe::separate_pairs() {
     sorted.push_back(it->first);
     pending.push_back(it->second);
   }
+  pending.push_back(odd_one_out);
 }
 
 paired_list &PmergeMe::sort_pairs() {
