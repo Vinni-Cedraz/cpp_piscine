@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
   PmergeMe merge_insertion_sorter(argc, argv);
   std::cout << merge_insertion_sorter.get_pairs();
   std::cout << merge_insertion_sorter.sort_pairs();
-  merge_insertion_sorter.separate_pairs();
+  std::cout << merge_insertion_sorter.separate_pairs() << std::endl;
   std::cout << merge_insertion_sorter.get_sorted() << std::endl;
   std::cout << merge_insertion_sorter.get_pending() << std::endl;
 }
