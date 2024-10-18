@@ -7,6 +7,10 @@
 
 #define VECTOR 0
 #define LIST 1
+#define CYAN "\033[36m"
+#define ORANGE "\033[33m"
+#define RESET "\033[0m"
+
 
 typedef std::list<std::pair<int, int> > paired_list;
 typedef std::vector<std::pair<int, int> > paired_vector;
@@ -33,6 +37,7 @@ public:
   PmergeMe(int argc, char **argv, bool vec_or_lst);
   // LISTS:
   std::list<int> input_list;
+  std::list<int> &create_input_list(int argc, char **argv);
   int lst_get_next_jacobsthal();
   paired_list &create_pairs_list();
   std::list<int> &create_index_list();
@@ -42,6 +47,7 @@ public:
   std::list<int> &insert_pending_into_sorted_list();
   // VECTORS:
   std::vector<int> input_vector;
+  std::vector<int> &create_input_vector(int argc, char **argv);
   int vec_get_next_jacobsthal();
   paired_vector &create_pairs_vector();
   std::vector<int> &create_index_vector();

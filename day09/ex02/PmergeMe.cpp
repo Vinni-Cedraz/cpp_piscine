@@ -1,44 +1,51 @@
-#include "PmergeMe.hpp"
 #include <algorithm>
+#include <set>
+#include <cstdlib>
+
+#include "PmergeMe.hpp"
 
 const int sixteen_jacobs[] = {0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845};
 
 #include <ctime>
 
 PmergeMe::PmergeMe(int argc, char **argv, bool vector_or_list) : odd_one_out(-42) {
+  if (argc < 2) throw std::runtime_error("wrong input");
   if (vector_or_list == LIST) {
-    clock_t start = clock();
-
-    if (argc < 2)
-      std::cerr << "wrong input" << std::endl;
-    for (int i = 1; i < argc; i++)
-      input_list.push_back(atoi(argv[i]));
-    if (input_list.size() % 2 != 0) {
-      int back = input_list.back();
-      input_list.pop_back();
-      odd_one_out = back;
+    std::list<int> lst = create_input_list(argc, argv);
+    std::set<int> seen;
+    for (std::list<int>::iterator it = lst.begin(); it != lst.end(); it++) {
+      if (seen.find(std::abs(*it)) != seen.end()) throw std::runtime_error("Duplicate element in input list");
+      seen.insert(*it);
     }
-
-    clock_t end = clock();
-    double elapsed = double(end - start) / CLOCKS_PER_SEC;
-
-    std::cout << "Time taken for data management of list input: " << elapsed << " s" << std::endl;
   }
   if (vector_or_list == VECTOR) {
-  		clock_t start = clock();
-  		if (argc < 2)
-  			std::cerr << "wrong input" << std::endl;
-  		for (int i = 1; i < argc; i++)
-  			input_vector.push_back(atoi(argv[i]));
-  		if (input_vector.size() % 2 != 0) {
-  			int back = input_vector.back();
-  			input_vector.pop_back();
-  			odd_one_out = back;
-  		}
-  		clock_t end = clock();
-  		double elapsed = double(end - start) / CLOCKS_PER_SEC;
-  		std::cout << "Time taken for data management of vector input: " << elapsed << " s" << std::endl;
-  	}
+    std::vector<int> vec = create_input_vector(argc, argv);
+    std::set<int> seen;
+    for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++) {
+      if (seen.find(std::abs(*it)) != seen.end()) throw std::runtime_error("Duplicate element in input list");
+      seen.insert(*it);
+    }
+  }
+}
+
+std::list<int> &PmergeMe::create_input_list(int argc, char **argv) {
+  for (int i = 1; i < argc; i++) input_list.push_back(atoi(argv[i]));
+  if (input_list.size() % 2 != 0) {
+    int back = input_list.back();
+    input_list.pop_back();
+    odd_one_out = back;
+  }
+  return input_list;
+}
+
+std::vector<int> &PmergeMe::create_input_vector(int argc, char **argv) {
+  for (int i = 1; i < argc; i++) input_vector.push_back(atoi(argv[i]));
+  if (input_vector.size() % 2 != 0) {
+    int back = input_vector.back();
+    input_vector.pop_back();
+    odd_one_out = back;
+  }
+  return input_vector;
 }
 
 paired_list &PmergeMe::create_pairs_list() {
@@ -52,8 +59,7 @@ paired_list &PmergeMe::create_pairs_list() {
 
 paired_list &PmergeMe::sort_pairs_list() {
   for (paired_list::iterator it = pairs.begin(); it != pairs.end(); it++)
-    if (it->first > it->second)
-      std::swap(it->first, it->second);
+    if (it->first > it->second) std::swap(it->first, it->second);
   pairs.sort();
   return pairs;
 }
@@ -63,15 +69,13 @@ int &PmergeMe::separate_pair_lists() {
     sorted.push_back(it->first);
     pending.push_back(it->second);
   }
-  if (-42 != odd_one_out)
-    pending.push_back(odd_one_out);
+  if (-42 != odd_one_out) pending.push_back(odd_one_out);
   return odd_one_out;
 }
 
 std::list<int> &PmergeMe::generate_jacobsthal_list() {
   for (int i = 0; i <= 15; i++) {
-    if (sixteen_jacobs[i] >= (const int)pending.size())
-      break;
+    if (sixteen_jacobs[i] >= (const int)pending.size()) break;
     jacobsthal_lst.push_back(sixteen_jacobs[i]);
   }
   return jacobsthal_lst;
@@ -88,8 +92,7 @@ int already_there(int jacob, std::list<int> index_list) {
   std::list<int>::iterator end = index_list.end();
 
   for (std::list<int>::iterator it = begin; it != end; it++)
-    if (*it == jacob)
-      return true;
+    if (*it == jacob) return true;
   return false;
 }
 
@@ -100,15 +103,13 @@ std::list<int> &PmergeMe::create_index_list() {
 
     index_list.push_back(jacob--);
     while (jacob > last && index_list.size() < pending.size()) {
-      if (!already_there(jacob, index_list))
-        index_list.push_back(jacob);
+      if (!already_there(jacob, index_list)) index_list.push_back(jacob);
       jacob--;
     }
   }
   if (index_list.size() < pending.size()) {
     int missing = pending.size() - 1;
-    while (index_list.size() < pending.size())
-      index_list.push_back(missing--);
+    while (index_list.size() < pending.size()) index_list.push_back(missing--);
   }
   return index_list;
 }
@@ -163,8 +164,7 @@ paired_vector &PmergeMe::create_pairs_vector() {
 
 paired_vector &PmergeMe::sort_pairs_vector() {
   for (paired_vector::iterator it = vec_pairs.begin(); it != vec_pairs.end(); ++it)
-    if (it->first > it->second)
-      std::swap(it->first, it->second);
+    if (it->first > it->second) std::swap(it->first, it->second);
   std::sort(vec_pairs.begin(), vec_pairs.end());
   return vec_pairs;
 }
@@ -174,15 +174,13 @@ int &PmergeMe::separate_pair_vectors() {
     vec_sorted.push_back(it->first);
     vec_pending.push_back(it->second);
   }
-  if (-42 != odd_one_out)
-    vec_pending.push_back(odd_one_out);
+  if (-42 != odd_one_out) vec_pending.push_back(odd_one_out);
   return odd_one_out;
 }
 
 std::vector<int> &PmergeMe::generate_jacobsthal_vector() {
   for (int i = 0; i <= 15; i++) {
-    if (sixteen_jacobs[i] >= (const int)vec_pending.size())
-      break;
+    if (sixteen_jacobs[i] >= (const int)vec_pending.size()) break;
     vec_jacobsthal.push_back(sixteen_jacobs[i]);
   }
   return vec_jacobsthal;
@@ -208,8 +206,7 @@ std::vector<int> &PmergeMe::create_index_vector() {
   }
   if (index_vector.size() < vec_pending.size()) {
     int missing = vec_pending.size() - 1;
-    while (index_vector.size() < vec_pending.size())
-      index_vector.push_back(missing--);
+    while (index_vector.size() < vec_pending.size()) index_vector.push_back(missing--);
   }
   return index_vector;
 }
@@ -250,4 +247,3 @@ std::ostream &operator<<(std::ostream &os, const paired_vector &vec) {
   }
   return os;
 }
-
