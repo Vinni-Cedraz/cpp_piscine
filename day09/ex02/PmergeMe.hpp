@@ -31,6 +31,7 @@ private:
   std::vector<int> vec_pending;
   std::vector<int> vec_jacobsthal;
   std::vector<int> index_vector;
+  // ODD
   int odd_one_out;
 
 public:
@@ -45,6 +46,7 @@ public:
   int &separate_pair_lists();
   std::list<int> &generate_jacobsthal_list();
   std::list<int> &insert_pending_into_sorted_list();
+  int &take_odd_one_out_lst();
   // VECTORS:
   std::vector<int> input_vector;
   std::vector<int> &create_input_vector(int argc, char **argv);
@@ -55,6 +57,7 @@ public:
   int &separate_pair_vectors();
   std::vector<int> &generate_jacobsthal_vector();
   std::vector<int> &insert_pending_into_sorted_vector();
+  int &take_odd_one_out_vec();
 };
 
 std::ostream &operator<<(std::ostream &os, const std::list<int> &lst);

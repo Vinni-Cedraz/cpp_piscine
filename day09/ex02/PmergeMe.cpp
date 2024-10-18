@@ -1,51 +1,39 @@
 #include <algorithm>
-#include <set>
 #include <cstdlib>
+#include <ctime>
+#include <set>
 
 #include "PmergeMe.hpp"
 
 const int sixteen_jacobs[] = {0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845};
 
-#include <ctime>
-
-PmergeMe::PmergeMe(int argc, char **argv, bool vector_or_list) : odd_one_out(-42) {
+PmergeMe::PmergeMe(int argc, char **argv, bool type) : odd_one_out(-42) {
   if (argc < 2) throw std::runtime_error("wrong input");
-  if (vector_or_list == LIST) {
-    std::list<int> lst = create_input_list(argc, argv);
-    std::set<int> seen;
-    for (std::list<int>::iterator it = lst.begin(); it != lst.end(); it++) {
-      if (seen.find(std::abs(*it)) != seen.end()) throw std::runtime_error("Duplicate element in input list");
-      seen.insert(*it);
-    }
-  }
-  if (vector_or_list == VECTOR) {
-    std::vector<int> vec = create_input_vector(argc, argv);
-    std::set<int> seen;
-    for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++) {
-      if (seen.find(std::abs(*it)) != seen.end()) throw std::runtime_error("Duplicate element in input list");
-      seen.insert(*it);
-    }
-  }
+  if (type == LIST)
+    create_input_list(argc, argv);
+  else if (type == VECTOR)
+    create_input_vector(argc, argv);
 }
 
 std::list<int> &PmergeMe::create_input_list(int argc, char **argv) {
   for (int i = 1; i < argc; i++) input_list.push_back(atoi(argv[i]));
+  std::set<int> seen;
+  for (std::list<int>::iterator it = input_list.begin(); it != input_list.end(); it++) {
+    if (seen.find(std::abs(*it)) != seen.end()) throw std::runtime_error("Duplicate element in input list");
+    seen.insert(*it);
+  }
+  take_odd_one_out_lst();
+  return input_list;
+}
+
+int &PmergeMe::take_odd_one_out_lst() {
   if (input_list.size() % 2 != 0) {
     int back = input_list.back();
     input_list.pop_back();
     odd_one_out = back;
+    pending.push_back(odd_one_out);
   }
-  return input_list;
-}
-
-std::vector<int> &PmergeMe::create_input_vector(int argc, char **argv) {
-  for (int i = 1; i < argc; i++) input_vector.push_back(atoi(argv[i]));
-  if (input_vector.size() % 2 != 0) {
-    int back = input_vector.back();
-    input_vector.pop_back();
-    odd_one_out = back;
-  }
-  return input_vector;
+  return odd_one_out;
 }
 
 paired_list &PmergeMe::create_pairs_list() {
@@ -69,7 +57,6 @@ int &PmergeMe::separate_pair_lists() {
     sorted.push_back(it->first);
     pending.push_back(it->second);
   }
-  if (-42 != odd_one_out) pending.push_back(odd_one_out);
   return odd_one_out;
 }
 
@@ -90,7 +77,6 @@ int PmergeMe::lst_get_next_jacobsthal() {
 int already_there(int jacob, std::list<int> index_list) {
   std::list<int>::iterator begin = index_list.begin();
   std::list<int>::iterator end = index_list.end();
-
   for (std::list<int>::iterator it = begin; it != end; it++)
     if (*it == jacob) return true;
   return false;
@@ -100,7 +86,6 @@ std::list<int> &PmergeMe::create_index_list() {
   while (index_list.size() < pending.size() && !jacobsthal_lst.empty()) {
     int last = index_list.back();
     int jacob = lst_get_next_jacobsthal();
-
     index_list.push_back(jacob--);
     while (jacob > last && index_list.size() < pending.size()) {
       if (!already_there(jacob, index_list)) index_list.push_back(jacob);
@@ -136,7 +121,7 @@ std::list<int> &PmergeMe::insert_pending_into_sorted_list() {
     std::list<int>::iterator position = list_binary_search(sorted, value);
     sorted.insert(position, value);
   }
-
+  if (-42 != odd_one_out) input_list.push_back(odd_one_out);
   return sorted;
 }
 
@@ -155,6 +140,28 @@ std::ostream &operator<<(std::ostream &os, const paired_list &lst) {
 }
 
 // VECTORS:
+
+std::vector<int> &PmergeMe::create_input_vector(int argc, char **argv) {
+  for (int i = 1; i < argc; i++) input_vector.push_back(atoi(argv[i]));
+  std::set<int> seen;
+  for (std::vector<int>::iterator it = input_vector.begin(); it != input_vector.end(); it++) {
+    if (seen.find(std::abs(*it)) != seen.end()) throw std::runtime_error("Duplicate element in input list");
+    seen.insert(*it);
+  }
+  take_odd_one_out_vec();
+  return input_vector;
+}
+
+int &PmergeMe::take_odd_one_out_vec() {
+  if (input_vector.size() % 2 != 0) {
+    int back = input_vector.back();
+    input_vector.pop_back();
+    odd_one_out = back;
+    vec_pending.push_back(odd_one_out);
+  }
+  return odd_one_out;
+}
+
 paired_vector &PmergeMe::create_pairs_vector() {
   for (std::vector<int>::iterator it = input_vector.begin(); it != input_vector.end(); it += 2) {
     vec_pairs.push_back(std::make_pair(*it, *(it + 1)));
@@ -174,7 +181,6 @@ int &PmergeMe::separate_pair_vectors() {
     vec_sorted.push_back(it->first);
     vec_pending.push_back(it->second);
   }
-  if (-42 != odd_one_out) vec_pending.push_back(odd_one_out);
   return odd_one_out;
 }
 
@@ -196,7 +202,6 @@ std::vector<int> &PmergeMe::create_index_vector() {
   while (index_vector.size() < vec_pending.size() && !vec_jacobsthal.empty()) {
     int last = index_vector.empty() ? 0 : index_vector.back();
     int jacob = vec_get_next_jacobsthal();
-
     index_vector.push_back(jacob--);
     while (jacob > last && index_vector.size() < vec_pending.size()) {
       if (std::find(index_vector.begin(), index_vector.end(), jacob) == index_vector.end())
@@ -230,7 +235,7 @@ std::vector<int> &PmergeMe::insert_pending_into_sorted_vector() {
     std::vector<int>::iterator position = vector_binary_search(vec_sorted, value);
     vec_sorted.insert(position, value);
   }
-
+  if (-42 != odd_one_out) input_vector.push_back(odd_one_out);
   return vec_sorted;
 }
 

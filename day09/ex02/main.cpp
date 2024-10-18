@@ -22,9 +22,6 @@ std::vector<int> run_merge_insertion_sort_with_vectors(PmergeMe &sorter) {
 }
 
 int main(int argc, char **argv) {
-  if (argc < 2) {
-    std::cerr << "wrong input" << std::endl;
-  }
   try {
     // DONE WITH LISTS ONLY:
     PmergeMe lst_sorter(argc, argv, LIST);
